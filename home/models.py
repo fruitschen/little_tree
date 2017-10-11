@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
@@ -51,7 +52,7 @@ class HomePage(Page):
     api_fields = ['body', 'gallery_images', ]
 
     class Meta:
-        verbose_name = "HomePage"
+        verbose_name = u'主页'
 
 
 HomePage.content_panels = [
@@ -82,6 +83,9 @@ class CategoryPage(Page):
 
     api_fields = ['intro', 'thumbnail']
 
+    class Meta:
+        verbose_name = u'分类页面'
+
 
 CategoryPage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -103,6 +107,10 @@ class SimplePage(Page):
     ]
 
     api_fields = ['intro', 'body', ]
+
+    class Meta:
+        verbose_name = u'简单页面'
+
 
 SimplePage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -127,6 +135,9 @@ class GalleryPage(Page):
     ]
 
     api_fields = ['intro', ]
+
+    class Meta:
+        verbose_name = u'图片页面'
 
 
 GalleryPage.content_panels = [
