@@ -51,6 +51,9 @@ class HomePage(Page):
 
     api_fields = ['body', 'gallery_images', ]
 
+    subpage_types = ['CategoryPage']
+    parent_page_types = []
+
     class Meta:
         verbose_name = u'主页'
 
@@ -82,6 +85,9 @@ class CategoryPage(Page):
     ]
 
     api_fields = ['intro', 'thumbnail']
+
+    subpage_types = ['GalleryPage', 'SimplePage']
+
 
     class Meta:
         verbose_name = u'分类页面'
