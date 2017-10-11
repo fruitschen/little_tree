@@ -2,7 +2,7 @@
 {% load static %}
 {% load wagtailcore_tags wagtailimages_tags pages_tags %}
 
-{% block body_class %}home-page{% endblock %}
+{% block body_class %}category-page{% endblock %}
 
 {% block outter_content %}
 	<div class="main main-raised">
@@ -20,19 +20,21 @@
 				<div class="row">
 					{% with page.get_children.live as pages %}
 						{% for page in pages %}
-							{% image page.specific.thumbnail fill-240x240 as theimage %}
-							<div class="col-md-3">
-								<div class="info">
-									<div class="icon icon-primary">
+							{% image page.specific.thumbnail fill-335x240 as theimage %}
+							<div class="col-md-4">
+								<div class="card">
+									<div class="content">
 										<a href="{% pageurl page %}">
 											<img src="{{ theimage.url }}" alt="{{ theimage.alt }}" />
 										</a>
-									</div>
-									<h4 class="info-title">
-										<a href="{% pageurl page %}">
+										<h4 class="pull-left title">
 											{{ page.title }}
+										</h4>
+										<a href="{% pageurl page %}" class="btn btn-sm btn-default btn-round pull-right">
+											查看
 										</a>
-									</h4>
+									</div>
+
 								</div>
 							</div>
 						{% endfor %}
