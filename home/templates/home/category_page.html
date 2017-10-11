@@ -4,19 +4,24 @@
 
 {% block body_class %}home-page{% endblock %}
 
-{% block header %}
-
-{% endblock header %}
-
 {% block outter_content %}
 	<div class="main main-raised">
 		<div class="container">
 			<div class="section text-center section-landing">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2 class="title">{{ self.title }}</h2>
+                        {% if self.intro %}
+                            {{ self.intro|richtext }}
+                        {% endif %}
+                    </div>
+                </div>
+
 				<div class="row">
 					{% with page.get_children.live as pages %}
 						{% for page in pages %}
-							{% image page.specific.thumbnail fill-180x180 as theimage %}
-							<div class="col-md-4">
+							{% image page.specific.thumbnail fill-240x240 as theimage %}
+							<div class="col-md-3">
 								<div class="info">
 									<div class="icon icon-primary">
 										<a href="{% pageurl page %}">

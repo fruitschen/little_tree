@@ -136,6 +136,10 @@ class GalleryPage(Page):
 
     api_fields = ['intro', ]
 
+    @property
+    def thumbnail(self):
+        return self.gallery_images.all()[0].image
+
     class Meta:
         verbose_name = u'图片页面'
 
