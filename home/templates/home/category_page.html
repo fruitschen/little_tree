@@ -21,17 +21,20 @@
 					{% with page.get_children.live as pages %}
 						{% for page in pages %}
 							{% image page.specific.thumbnail fill-335x240 as theimage %}
-							<div class="col-md-4">
+							<div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 ">
 								<div class="card">
-									<div class="content">
+									<div class="thumbnail">
 										<a href="{% pageurl page %}">
 											<img src="{{ theimage.url }}" alt="{{ theimage.alt }}" />
 										</a>
-										<h4 class="pull-left title">
-											{{ page.title }}
-											<span>{{ page.specific.timestamp|date:'y-m-j' }}</span>
-										</h4>
-
+									</div>
+		                            <div class="card-info">
+										<h3 class="pull-left title">
+											<a href="{% pageurl page %}">
+												{{ page.title }}
+												<span>{{ page.specific.timestamp|date:'y-m-j' }}</span>
+											</a>
+										</h3>
 										<a href="{% pageurl page %}" class="btn btn-sm btn-default btn-round pull-right">
 											查看
 										</a>

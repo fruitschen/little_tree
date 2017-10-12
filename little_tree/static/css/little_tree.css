@@ -22,3 +22,34 @@
 .simple-page .page-body img{
   max-width: 100%;
 }
+
+.card {
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 60px;
+}
+.card .thumbnail {
+    border: 0 none;
+    padding: 0;
+    margin: 8px 0 0 0;
+    position: relative;
+    background: transparent;
+}
+
+.card .thumbnail>img, .card .thumbnail a>img {
+    border-radius: 8px 8px;
+    box-shadow: 0 25px 20px -21px rgba(0,0,0,0.57);
+    width: 95%;
+}
+.card .card-info {
+    padding: 15px;
+    border-radius: 0 0 12px 12px;
+}
+.card-info a:not(.btn) {
+    color: #434343;
+}
+.card-info h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 22px;
+}
