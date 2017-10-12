@@ -29,7 +29,9 @@
 										</a>
 										<h4 class="pull-left title">
 											{{ page.title }}
+											<span>{{ page.specific.timestamp|date:'y-m-j' }}</span>
 										</h4>
+
 										<a href="{% pageurl page %}" class="btn btn-sm btn-default btn-round pull-right">
 											查看
 										</a>

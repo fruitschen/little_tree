@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
+from datetime import datetime
 
 from django.db import models
 
@@ -134,6 +135,11 @@ class GalleryPageGalleryImage(Orderable, GalleryImage):
 
 class GalleryPage(Page):
     intro = RichTextField(blank=True)
+    timestamp = models.DateTimeField(
+        verbose_name=u'时间',
+        blank=True,
+        null=True
+    )
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
@@ -144,7 +150,20 @@ class GalleryPage(Page):
 
     @property
     def thumbnail(self):
-        return self.gallery_images.all()[0].image
+        if self.id and self.gallery_images.all():
+            return self.gallery_images.all()[0].image
+
+    def save(self, *args, **kwargs):
+        result = super(GalleryPage, self).save(*args, **kwargs)
+        if not self.timestamp:
+            thumbnail = self.thumbnail
+            if thumbnail:
+                filename = thumbnail.filename.lower()
+                if 'img' in filename:
+                    time_str = filename.replace('img_', '').replace('.jpg', '')
+                    timestmap = datetime.strptime(time_str, '%Y-%m-%d-%H%M%S')
+                    self.timestamp = timestmap
+                    self.save()
 
     class Meta:
         verbose_name = u'图片页面'
@@ -152,6 +171,7 @@ class GalleryPage(Page):
 
 GalleryPage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('timestamp'),
     FieldPanel('intro', classname="full"),
     InlinePanel('gallery_images', label="Gallery images"),
 ]
