@@ -89,6 +89,11 @@ class CategoryPage(Page):
 
     subpage_types = ['GalleryPage', 'SimplePage']
 
+    def get_template(self, request):
+        if self.get_children().live().filter(gallerypage__isnull=False).exists():
+            return 'home/category_page.html'
+        else:
+            return 'home/category_page_simple.html'
 
     class Meta:
         verbose_name = u'分类页面'

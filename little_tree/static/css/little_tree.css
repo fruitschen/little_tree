@@ -1,3 +1,24 @@
 .category-page .btn-default {
   background-color: rgb(68, 183, 139);
 }
+
+.simple-page .section{
+  padding-top: 40px;
+}
+
+.simple-page h2.title {
+  margin: 0;
+}
+
+.simple-category-page h2, .simple-category-page h3,
+.simple-page h2.title, .simple-page .page-body, .simple-page .rich-text p  {
+  text-align: left;
+}
+
+.simple-category-page h3.title{
+  border-bottom: 1px solid #cccccc;
+}
+
+.simple-page .page-body img{
+  max-width: 100%;
+}
