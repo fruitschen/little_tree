@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'compressor',
+    'django_extensions',
 
     'django.contrib.admin',
     'django.contrib.auth',

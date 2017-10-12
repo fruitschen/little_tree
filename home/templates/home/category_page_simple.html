@@ -11,9 +11,11 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h2 class="title">{{ self.title }}</h2>
-                        {% if self.intro.strip %}
-                            {{ self.intro|richtext }}
-                        {% endif %}
+                        <div class="intro">
+                            {% if self.intro.strip %}
+                                {{ self.intro|richtext }}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="row">

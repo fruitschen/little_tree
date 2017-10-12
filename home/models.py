@@ -1,14 +1,17 @@
 # -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 from datetime import datetime
+from PIL import Image as PILImage
 
 from django.db import models
+from django.db.models.signals import post_save
 
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
+from wagtail.wagtailimages.models import Image as WagtailImage
 
 from modelcluster.fields import ParentalKey
 
@@ -181,3 +184,21 @@ GalleryPage.content_panels = [
     InlinePanel('gallery_images', label="Gallery images"),
 ]
 
+
+def resize_image(path):
+    max_width = 1080
+    img = PILImage.open(path)
+    original_width, original_height = img.size
+    if original_width < max_width:  # no need to resize
+        return
+    width_percent = (max_width / float(original_width))
+    new_height = int((float(original_height) * float(width_percent)))
+    img = img.resize((max_width, new_height), PILImage.ANTIALIAS)
+    img.save(path)
+
+
+def image_post_save(sender, instance, **kwargs):
+    image_path = instance.file.path
+    resize_image(image_path)
+
+post_save.connect(image_post_save, sender=WagtailImage)

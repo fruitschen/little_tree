@@ -10,7 +10,7 @@
   margin: 0;
 }
 
-.simple-category-page h2, .simple-category-page h3,
+.simple-category-page h2, .simple-category-page h3, .simple-category-page .intro,
 .simple-page h2.title, .simple-page .page-body, .simple-page .rich-text p  {
   text-align: left;
 }
