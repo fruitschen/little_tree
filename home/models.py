@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from PIL import Image as PILImage
+from PIL import ExifTags
 
 from django.db import models
 from django.db.models.signals import post_save
@@ -185,9 +186,23 @@ GalleryPage.content_panels = [
 ]
 
 
+for orientation in ExifTags.TAGS.keys():
+    if ExifTags.TAGS[orientation] == 'Orientation': break
+
+
 def resize_image(path):
     max_width = 1080
     img = PILImage.open(path)
+    if hasattr(img, '_getexif'):
+        # we need to rotate the image based on exif info.
+        # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
+        exif = dict(img._getexif().items())
+        if exif[orientation] == 3:
+            img = img.rotate(180, expand=True)
+        elif exif[orientation] == 6:
+            img = img.rotate(270, expand=True)
+        elif exif[orientation] == 8:
+            img = img.rotate(90, expand=True)
     original_width, original_height = img.size
     if original_width < max_width:  # no need to resize
         return
