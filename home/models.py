@@ -228,6 +228,9 @@ def resize_image(path):
     if hasattr(img, '_getexif'):
         # we need to rotate the image based on exif info.
         # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
+        exif = img._getexif()
+        if not exif:
+            return
         exif = dict(img._getexif().items())
         if exif[orientation] == 3:
             img = img.rotate(180, expand=True)

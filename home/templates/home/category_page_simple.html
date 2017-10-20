@@ -22,13 +22,13 @@
                     <div class="col-md-8 col-md-offset-2">
                         {% with page.sub_pages as pages %}
                             {% for page in pages %}
-                                <div class="">
-                                    <h3 class="title">
+                                <div class="card">
+                                    <h4 class="title">
                                         <a href="{% pageurl page %}" >
                                             {{ page.title }}
                                         </a>
-                                        <span>{{ page.specific.timestamp|date:'y-m-j' }}</span>
-                                    </h3>
+                                        <span class="pull-right timestamp">{{ page.specific.timestamp|date:'Y年m月d日' }}</span>
+                                    </h4>
                                 </div>
                             {% endfor %}
                         {% endwith %}

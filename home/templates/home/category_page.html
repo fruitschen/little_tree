@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h2 class="title">{{ self.title }}</h2>
-                        {% if self.intro %}
+                        {% if self.intro.strip %}
                             {{ self.intro|richtext }}
                         {% endif %}
                     </div>
@@ -30,9 +30,9 @@
 									</div>
 		                            <div class="card-info">
 										<h3 class="pull-left title">
-											<a href="{% pageurl page %}">
-												{{ page.title }}
-												<span>{{ page.specific.timestamp|date:'y-m-j' }}</span>
+											<a href="{% pageurl page %}" title="{{ page.title }}">
+												{{ page.title|truncatechars:10 }}
+												<span class="timestamp">{{ page.specific.timestamp|date:'y-m-j' }}</span>
 											</a>
 										</h3>
 										<a href="{% pageurl page %}" class="btn btn-sm btn-default btn-round pull-right">
