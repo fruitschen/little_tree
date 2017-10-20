@@ -114,10 +114,29 @@ CategoryPage.content_panels = [
 ]
 
 
+# Base Details Page
+
+
+class BaseDetailsPage(Page):
+
+    def get_prev(self):
+        query = self.get_siblings().live().filter(first_published_at__lt=self.first_published_at)
+        if query.exists():
+            return query.order_by('-first_published_at')[0]
+
+    def get_next(self):
+        query = self.get_siblings().live().filter(first_published_at__gt=self.first_published_at)
+        if query.exists():
+            return query.order_by('first_published_at')[0]
+
+    class Meta:
+        abstract = True
+
+
 # Simple Page
 
 
-class SimplePage(Page):
+class SimplePage(BaseDetailsPage):
     intro = RichTextField(blank=True)
     body = RichTextField(blank=True)
     thumbnail = models.ForeignKey(
@@ -167,7 +186,7 @@ class GalleryPageGalleryImage(Orderable, GalleryImage):
     page = ParentalKey('GalleryPage', related_name='gallery_images')
 
 
-class GalleryPage(Page):
+class GalleryPage(BaseDetailsPage):
     intro = RichTextField(blank=True)
     timestamp = models.DateTimeField(
         verbose_name=u'时间',
