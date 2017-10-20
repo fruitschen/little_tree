@@ -8,13 +8,22 @@ from django.db import models
 from django.db.models.signals import post_save
 
 from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailimages.models import Image as WagtailImage
+from wagtail.wagtailcore.blocks import TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock, RawHTMLBlock
 
 from modelcluster.fields import ParentalKey
+
+
+# Stream Field
+
+
+class CustomStreamBlock(StreamBlock):
+    paragraph = RichTextBlock(icon="pilcrow")
+    html = RawHTMLBlock(icon="code", label='Raw HTML')
 
 
 # Gallery images
@@ -139,6 +148,11 @@ class BaseDetailsPage(Page):
 class SimplePage(BaseDetailsPage):
     intro = RichTextField(blank=True)
     body = RichTextField(blank=True)
+    extra_body = StreamField(
+        CustomStreamBlock,
+        blank=True, default=''
+    )
+
     thumbnail = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -176,6 +190,7 @@ SimplePage.content_panels = [
     ImageChooserPanel('thumbnail'),
     FieldPanel('intro', classname="full"),
     FieldPanel('body', classname="full"),
+    StreamFieldPanel('extra_body'),
 ]
 
 

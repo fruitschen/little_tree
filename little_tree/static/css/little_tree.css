@@ -37,6 +37,15 @@
   box-shadow: none;
 }
 
+.category-page .title-row{
+    padding-bottom: 40px;
+}
+
+.category-page .title-row, .simple-category-page .title-row{
+    border-bottom: 1px solid #CFE3DC;
+    margin-bottom: 40px;
+}
+
 .category-page .card {
     border-radius: 8px;
     position: relative;

@@ -1,0 +1,11 @@
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% for child in content %}
+    {% if child.block_type == 'paragraph' %}
+        {{ child.value.content|richtext }}
+    {% elif child.block_type == 'html' %}
+        {{ child }}
+    {% else %}
+        {{ child }}
+    {% endif %}
+{% endfor %}

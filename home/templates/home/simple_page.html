@@ -22,6 +22,16 @@
 						{{ self.body|richtext }}
 					</div>
 				</div>
+                {% if self.extra_body %}
+                    <div class="row page-body">
+                        <div class="col-md-8 col-md-offset-2">
+                            {% include "pages/includes/streamfield.html" with content=self.extra_body %}
+                        </div>
+                    </div>
+
+
+                {% endif %}
+
 			</div>
 		</div>
 	</div>
