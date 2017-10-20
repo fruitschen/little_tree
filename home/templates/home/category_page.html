@@ -18,7 +18,7 @@
                 </div>
 
 				<div class="row">
-					{% with page.get_children.live as pages %}
+					{% with page.sub_pages as pages %}
 						{% for page in pages %}
 							{% image page.specific.thumbnail fill-335x240 as theimage %}
 							<div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 ">

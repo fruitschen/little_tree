@@ -99,6 +99,10 @@ class CategoryPage(Page):
         else:
             return 'home/category_page_simple.html'
 
+    @property
+    def sub_pages(self):
+        return self.get_children().live().order_by('-first_published_at')
+
     class Meta:
         verbose_name = u'分类页面'
 
@@ -116,13 +120,32 @@ CategoryPage.content_panels = [
 class SimplePage(Page):
     intro = RichTextField(blank=True)
     body = RichTextField(blank=True)
+    thumbnail = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    timestamp = models.DateTimeField(
+        verbose_name=u'时间',
+        blank=True,
+        null=True
+    )
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
     ]
 
-    api_fields = ['intro', 'body', ]
+    api_fields = ['intro', 'body', 'thumbnail', ]
+    subpage_types = []
+
+    def save(self, *args, **kwargs):
+        result = super(SimplePage, self).save(*args, **kwargs)
+        if self.first_published_at and self.timestamp and self.first_published_at > self.timestamp:
+            self.first_published_at = self.timestamp
+            self.save()
 
     class Meta:
         verbose_name = u'简单页面'
@@ -130,6 +153,8 @@ class SimplePage(Page):
 
 SimplePage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('timestamp'),
+    ImageChooserPanel('thumbnail'),
     FieldPanel('intro', classname="full"),
     FieldPanel('body', classname="full"),
 ]
@@ -156,6 +181,7 @@ class GalleryPage(Page):
     ]
 
     api_fields = ['intro', ]
+    subpage_types = []
 
     @property
     def thumbnail(self):
@@ -168,11 +194,17 @@ class GalleryPage(Page):
             thumbnail = self.thumbnail
             if thumbnail:
                 filename = thumbnail.filename.lower()
-                if 'img' in filename:
+                if 'img_' in filename:
                     time_str = filename.replace('img_', '').replace('.jpg', '')
+                    time_str = time_str[:17]
                     timestmap = datetime.strptime(time_str, '%Y-%m-%d-%H%M%S')
                     self.timestamp = timestmap
                     self.save()
+
+        if self.first_published_at and self.timestamp and self.first_published_at > self.timestamp:
+            self.first_published_at = self.timestamp
+            self.save()
+
 
     class Meta:
         verbose_name = u'图片页面'
