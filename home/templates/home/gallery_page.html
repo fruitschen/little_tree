@@ -17,11 +17,10 @@
                     </div>
                 </div>
 
-				<div class="row" id="carousel">
+				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Carousel Card -->
-						<div class="card card-raised card-carousel">
-							<div id="carousel-gallery" class="carousel slide" data-interval="3000" >
+							<div id="carousel-gallery" class="carousel slide">
 								<!-- Indicators -->
 								<ol class="carousel-indicators">
 									{% for image in self.gallery_images.all %}
@@ -52,7 +51,6 @@
 									<i class="material-icons">keyboard_arrow_right</i>
 								</a>
 							</div>
-						</div>
 						<!-- End Carousel Card -->
 					</div>
 				</div>
@@ -72,6 +70,7 @@
 			$("#carousel-gallery").swipeleft(function() {
 			  $(this).carousel('next');
 		    });
+		    $('#carousel-gallery').carousel({ interval: 5000, cycle: true });
 		});
 	</script>
 {% endblock %}
