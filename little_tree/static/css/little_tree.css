@@ -29,6 +29,7 @@
 
 .simple-page .page-body img{
   max-width: 100%;
+  height:auto;
 }
 
 .simple-category-page .card {
